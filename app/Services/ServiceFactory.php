@@ -18,15 +18,15 @@ class ServiceFactory
   public function get($service, $limit = 10)
   {
     if (method_exists($this, $service)) {
-      return $this->{$service}($limit);
+      return $this->sortResponseByTimestamp($this->{$service}($limit));
     }
   }
 
   protected function hackernews($limit = 10)
   {
-    $data = (new HackerNews($this->client))->get($limit);
+    $data = json_encode((new HackerNews($this->client))->get($limit));
 
-    return (new HackerNewsTransformer($data))->create();
+     return (new HackerNewsTransformer(json_decode($data)))->create();
   }
 
     protected function sortResponseByTimestamp(array $data)

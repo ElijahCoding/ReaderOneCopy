@@ -16,7 +16,7 @@ abstract class TransformerAbstract
   public function create()
   {
     return array_map(function ($item) {
-      return $this->transform($data);
+      return $this->transform($item);
     }, $this->data);
   }
 }
