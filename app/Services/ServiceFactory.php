@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\HackerNews;
+use App\Services\Transformers\HackerNewsTransformer;
 use GuzzleHttp\Client as Guzzle;
 
 class ServiceFactory
@@ -23,6 +24,17 @@ class ServiceFactory
 
   protected function hackernews($limit = 10)
   {
-    return (new HackerNews($this->client))->get();
+    $data = (new HackerNews($this->client))->get($limit);
+
+    return (new HackerNewsTransformer($data))->create();
   }
+
+    protected function sortResponseByTimestamp(array $data)
+    {
+        usort($data, function ($a, $b) {
+            return $a['timestamp'] - $b['timestamp'];
+        });
+
+        return $data;
+    }
 }
