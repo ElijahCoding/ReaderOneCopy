@@ -2,4 +2,6 @@
 
 use App\Controllers\Api\NewsController;
 
-$app->get('/api/news/{service}', NewsController::class . ':show');
+$app->group('/api', function() {
+  $this->get('/news/{service}', NewsController::class . ':show');
+});

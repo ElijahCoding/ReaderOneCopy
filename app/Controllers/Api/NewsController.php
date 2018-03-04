@@ -12,6 +12,8 @@ class NewsController extends Controller
 {
     public function show(Request $request, Response $response, $args)
     {
-        return 'news';
+        return $response->withJson(
+          $this->c->services->get($args['service'])
+        );
     }
 }
