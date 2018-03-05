@@ -10,7 +10,8 @@
         "slim/twig-view": "^2.2",
         "symfony/var-dumper": "^3.2",
         "vlucas/phpdotenv": "^2.4",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "nesbot/carbon": "^1.23"
     },
     "autoload": {
         "psr-4": {

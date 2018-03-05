@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Services\Transformers;
+
+use Carbon\Carbon;
+use App\Services\Transformers\TransformerAbstract;
+
+class ProductHuntTransformer extends TransformerAbstract
+{
+  public function transform($payload)
+  {
+    return [
+            'title' => $payload->name,
+            'link' => $payload->discussion_url,
+            'timestamp' => Carbon::parse($payload->created_at, 'UTC')->getTimestamp(),
+            'service' => 'ProductHunt'
+        ];
+  }
+}

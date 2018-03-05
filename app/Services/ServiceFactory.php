@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Services\HackerNews;
 use App\Services\Transformers\RedditTransformer;
 use App\Services\Transformers\HackerNewsTransformer;
+use App\Services\Transformers\ProductHuntTransformer;
 use GuzzleHttp\Client as Guzzle;
 
 class ServiceFactory
@@ -37,12 +38,19 @@ class ServiceFactory
     return (new RedditTransformer(json_decode($data)))->create();
   }
 
-    protected function sortResponseByTimestamp(array $data)
-    {
-        usort($data, function ($a, $b) {
-            return $a['timestamp'] - $b['timestamp'];
-        });
+  protected function producthunt($limit = 10)
+  {
+    $data = json_encode((new ProductHunt($this->client))->get($limit));
 
-        return $data;
-    }
+    return (new ProductHuntTransformer(json_decode($data)))->create();
+  }
+
+  protected function sortResponseByTimestamp(array $data)
+  {
+      usort($data, function ($a, $b) {
+          return $a['timestamp'] - $b['timestamp'];
+      });
+
+      return $data;
+  }
 }
