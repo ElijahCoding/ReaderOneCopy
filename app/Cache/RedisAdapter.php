@@ -12,4 +12,25 @@ class RedisAdapter
   {
     $this->client = $client;
   }
+
+  public function get($key)
+  {
+    return $this->client->get($key);
+  }
+
+  public function put($key, $value, $minutes = 10)
+  {
+    $this->client->setex($key, (int) $minutes * 60, $value);
+  }
+
+  public function remember($key, $minutes = 10, callable $callback)
+  {
+    if ($value = $this->get($key)) {
+      return $value;
+    }
+    
+    $this->put($key, $value = $callback(), $minutes);
+
+    return $value;
+  }
 }
