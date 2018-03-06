@@ -4,13 +4,17 @@ var app = new Vue({
   delimiters: ['${', '}'],
 
   data: {
-    items: []
+    items: [],
+    loading: false
   },
 
   methods: {
     load (service) {
+      this.loading = true
+
       axios.get('http://distractiondashboard.test/api/news/' + service).then((response) => {
         this.items = response.data
+        this.loading = false
       })
     }
   },
